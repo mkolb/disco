@@ -1,0 +1,15 @@
+<!doctype html>
+<head>
+  <title>Student Disco(very)</title>
+</head>
+<body>
+  <h1>Question {{id}}</h1>
+  <h3>{{ q[id|int] }}</h3>
+  {% set nextq = id|int + 1 %}
+  <form action="{{ url_for('display_question', question_id=nextq) }}" method=post>
+  {% for res in r  %}
+  <input type="radio" name="r" value="{{res[1]}}">{{res[0]}}<br>
+  {% endfor %}
+  <input type="submit">
+  </form>
+</body>
