@@ -1,5 +1,6 @@
+import logging
 import sqlite3
-from flask import Flask, url_for, render_template, make_response, redirect
+from flask import Flask, url_for, render_template, make_response, redirect, request, session, escape
 from contextlib import closing
 app = Flask(__name__)
 app.debug = True
@@ -30,11 +31,12 @@ def init_db():
 #url_for('static', filename='style.css')
 
 responses = []
-responses.append(('Response 0', 'INTERCEPTOR'))
-responses.append(('Response 1', 'TINA'))
-responses.append(('Response 2', 'FIGHTER'))
+responses.append(('Cheese', 'INTERCEPTOR'))
+responses.append(('Men', 'TINA'))
+responses.append(('Cereal', 'HUMAN'))
+responses.append(('Souls', 'FIGHTER'))
 
-questions = [['Question Text', responses]]
+questions = [['When I wake up in the morning I like to consume...', responses]]
 
 @app.route('/')
 def landing():
@@ -42,16 +44,21 @@ def landing():
 
 @app.route('/q/<int:question_id>', methods=['GET','POST'])
 def display_question(question_id):
+    if request.method == 'POST':
+        session['question_' + str(question_id -1)] = request.form['r']
     if question_id > len(questions) - 1:
         return redirect(url_for('spirit_animal'))
     resp = make_response(render_template('question.html', q=questions[question_id], r=questions[question_id][1], id=question_id))
-    resp.set_cookie('question_id', str(question_id + 1))
     return resp
 
 @app.route('/spirit_animal')
 def spirit_animal():
-    return 'your spirit animal is TINA'
+    def calculate_animal():
+        return escape(session['question_0'])
+    return render_template('spirit_animal.html', animal=calculate_animal())
 
 
 if __name__ == '__main__':
     app.run()
+
+app.secret_key = 'SKLDJF804208sdklzklsjdf'
