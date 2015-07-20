@@ -5,30 +5,7 @@ from contextlib import closing
 app = Flask(__name__)
 app.debug = True
 
-DATABASE = 'disco.db'
 app.config.from_object(__name__)
-
-def connect_db():
-    return sqlite3.connect(app.config['DATABASE'])
-
-def init_db():
-    with closing(connect_db()) as db:
-        with app.open_resource('schema.sql', mode='r') as f:
-            db.cursor().executescript(f.read())
-        db.commit()
-
-# @app.before_request
-# def before_request():
-#     g.db = connect_db()
-
-# @app.teardown_request
-# def teardown_request(exception):
-#     db = getattr(g, 'db', None)
-#     if db is not None:
-#         db.close()
-#app.run(host='0.0.0.0')
-
-#url_for('static', filename='style.css')
 
 responses = []
 responses.append(('Cheese', 'INTERCEPTOR'))
@@ -38,6 +15,21 @@ responses.append(('Souls', 'FIGHTER'))
 
 questions = [['When I wake up in the morning I like to consume...', responses]]
 
+responses = []
+responses.append(('Kramer', 'HUMAN'))
+responses.append(('George', 'INTERCEPTOR'))
+responses.append(('Crazy Joe Devola', 'FIGHTER'))
+responses.append(('Puddy', 'TINA'))
+
+questions.append(['My favorite Seinfeld character is...', responses])
+
+responses = []
+responses.append(('Sunflower', 'HUMAN'))
+responses.append(('Hummingbird', 'INTERCEPTOR'))
+responses.append(('Boll Weevil', 'FIGHTER'))
+responses.append(('Unicorn', 'TINA'))
+
+questions.append(['My favorite living creature is...', responses])
 @app.route('/')
 def landing():
     return render_template('landing.html')
