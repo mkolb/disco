@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container">
   <div class="jumbotron">
-    <h1>You are {% if animal == 'Imaginer' %}an{% else %}a{% endif %} {{animal}}</h1>
+    <h1>You are {% if animal == 'Imaginer' %}an{% else %}a{% endif %} <span class="animal">{{animal}}</span></h1>
     <p>{{animals[animal][0]}}</p>
     <p><a href="{{ url_for('landing') }}">Give it another shot</a></p>
   </div>
