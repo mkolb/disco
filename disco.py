@@ -60,7 +60,7 @@ questions.append(['Which is your greatest fear?', responses])
 responses = []
 responses.append(('"Enchanted"', 'Imaginer'))
 responses.append(('"Love Story"', 'Harmonizer'))
-responses.append(('"I Knew You Were Trouble', 'Rebel'))
+responses.append(('"I Knew You Were Trouble"', 'Rebel'))
 responses.append(('"Blank Space"', 'Persister'))
 responses.append(('"We Are Never Getting Back Together"', 'Thinker'))
 responses.append(('"Shake it Off"', 'Promoter'))
