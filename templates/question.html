@@ -1,15 +1,24 @@
-<!doctype html>
-<head>
-  <title>Student Disco(very)</title>
-</head>
-<body>
-  <h1>Question {{id}}</h1>
-  <h3>{{ q[0] }}</h3>
-  {% set nextq = id|int + 1 %}
-  <form action="{{ url_for('display_question', question_id=nextq) }}" method=post>
-  {% for res in r  %}
-  <input type="radio" name="r" value="{{res[1]}}">{{res[0]}}<br>
-  {% endfor %}
-  <input type="submit">
-  </form>
-</body>
+{% extends "bootstrap/base.html" %}
+{% block title %}Student Disco(very){% endblock %}
+{% block content %}
+<div class="container">
+  <div class="jumbotron">
+    <h2>{{ q[0] }}</h2>
+    {% set nextq = id|int + 1 %}
+    <form class="form-horizontal" action="{{ url_for('display_question', question_id=nextq) }}" method=post>
+      <div class="form-group">
+	<div class="col-sm-offset-2 col-sm-10">
+	  {% for res in r  %}
+	  <div class="radio">
+            <label>
+	      <input class="radio" type="radio" name="r" value="{{res[1]}}"><p class="lead">{{res[0]}}</p>
+	    </label>
+	  </div>
+	  {% endfor %}
+	  <input type="submit">
+	</div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
