@@ -1,11 +1,9 @@
-{% extends "bootstrap/base.html" %}
+{% extends "base.html" %}
 {% block title %}Student Disco(very){% endblock %}
 {% block content %}
 <div class="container">
   <div class="jumbotron">
-    <h1>Welcome to Student Disco(very)!</h1>
-    <p>Now that you’ve completed an initial request for information, take the following fun quiz:
-    <a href="{{ url_for('display_question', question_id=0) }}"><b>What Kind of Student Are You?</b></a></p>
+    <a href="{{ url_for('display_question', question_id=0) }}"><img src="{{url_for('static', filename='logo.png')}}" class="img-responsive"></a>
   </div>
 </div>
 {% endblock %}
