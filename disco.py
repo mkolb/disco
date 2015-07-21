@@ -1,11 +1,15 @@
-import logging
-import sqlite3
+import logging, collections
 from flask import Flask, url_for, render_template, make_response, redirect, request, session, escape
 from contextlib import closing
 app = Flask(__name__)
 app.debug = True
 
 app.config.from_object(__name__)
+
+animals = {'INTERCEPTOR': ["The interceptor is bound to succeed by virtue of a steady hand and solid defence.", "interceptor.jpg"],
+           'TINA': ["Tinas are just the best.", "tina.gif"],
+           'HUMAN': ["Humans are well, human.  They're prone to succeed through persistence.", "human.gif"],
+           'FIGHTER': ["The fighter swings and swings and swings until they knockout whatever challenges face them.", "fighter.gif"]}
 
 responses = []
 responses.append(('Cheese', 'INTERCEPTOR'))
@@ -29,7 +33,7 @@ responses.append(('Hummingbird', 'INTERCEPTOR'))
 responses.append(('Boll Weevil', 'FIGHTER'))
 responses.append(('Unicorn', 'TINA'))
 
-questions.append(['My favorite living creature is...', responses])
+questions.append(['My favorite living creature is a...', responses])
 @app.route('/')
 def landing():
     return render_template('landing.html')
@@ -46,8 +50,15 @@ def display_question(question_id):
 @app.route('/spirit_animal')
 def spirit_animal():
     def calculate_animal():
-        return escape(session['question_0'])
-    return render_template('spirit_animal.html', animal=calculate_animal())
+        n = len(questions)
+        qnames=map(lambda q: 'question_' + str(q), range(n))
+        answers = []
+        for q in qnames:
+            answers.append(session[q])
+        animal=collections.Counter(answers).most_common(1)
+        app.logger.info(animal)
+        return animal[0][0]
+    return render_template('spirit_animal.html', animal=calculate_animal(), animals=animals)
 
 
 if __name__ == '__main__':
