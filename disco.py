@@ -65,7 +65,7 @@ responses.append(('"Blank Space"', 'Persister'))
 responses.append(('"We Are Never Getting Back Together"', 'Thinker'))
 responses.append(('"Shake it Off"', 'Promoter'))
 
-questions.append(['If you were stuck in an elevator for 24 hours, which Taylor Swift song could you listen to on repeat?', responses])
+questions.append(['Which Taylor Swift song are you?', responses])
 
 @app.route('/')
 def landing():
